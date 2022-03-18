@@ -22,16 +22,17 @@ public class PlayerMovement : MonoBehaviour
 
     private Animator anim;
 
-    int borderUp = 17;
-    int borderDown = -17;
-    int borderLeft = -30;
-    int borderRight = 30;
+    float borderUp = 17.5f;
+    float borderDown = -17.5f;
+    float borderLeft = -30;
+    float borderRight = 30;
 
     bool canUp = true;
     bool canDown = true;
     bool canLeft = true;
     bool canRight = true;
 
+    bool isSwitcht = false;
     void Start()
     {
         anim = GetComponent<Animator>();  
@@ -131,56 +132,99 @@ public class PlayerMovement : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {   
         //Moved the cam by switch the room And Moved the scale of the room for the player that he can walk
-        if(other.gameObject.name == "DoorLeft")
+        if(other.gameObject.name == "DoorLeft" && !isSwitcht)
         {
+            isSwitcht = true;
             //Player
-            borderLeft -= 62;
-            borderRight -= 62;
-            this.gameObject.transform.Translate(-5, 0, 0);
+            this.gameObject.transform.Translate(-7, 0, 0);
+            borderLeft -= 64;
+            borderRight -= 64;
+            
 
             //Cam
-            camMovement.leftBorder -= 62;
-            camMovement.rightBorder -= 62;
+            camMovement.leftBorder -= 64;
+            camMovement.rightBorder -= 64;
+            
+            
         }
-        else if(other.gameObject.name == "DoorRight")
+         if(other.gameObject.name == "DoorRight" && !isSwitcht)
         {
+            isSwitcht=true;
             //Player
-            borderRight += 62;
-            borderLeft += 62;
-            this.gameObject.transform.Translate(5, 0, 0);
+            this.gameObject.transform.Translate(7, 0, 0);
+            borderRight += 64;
+            borderLeft += 64;
+            
 
             //Cam
-            camMovement.leftBorder += 62;
-            camMovement.rightBorder += 62;
+            camMovement.leftBorder += 64;
+            camMovement.rightBorder += 64;
+            
+            
         }
-        else if(other.gameObject.name == "DoorUp")
+         if(other.gameObject.name == "DoorUp" && !isSwitcht)
         {
+            isSwitcht=true;
             //Player
+            this.gameObject.transform.Translate(0, 7, 0);
             borderUp += 36;
             borderDown += 36;
-            this.gameObject.transform.Translate(0, 5, 0);
+            
 
             //Cam
             camMovement.topBorder += 36;
             camMovement.bottomBorder += 36;
+            
+            
         }
-        else if(other.gameObject.name == "DoorDown")
+         if(other.gameObject.name == "DoorDown" && !isSwitcht)
         {
+            isSwitcht = true;
             //Player
+            this.gameObject.transform.Translate(0, -7, 0);
             borderDown -= 36;
             borderUp -= 36;
-            this.gameObject.transform.Translate(0, -5, 0);
+            
 
             //Cam
             camMovement.topBorder -= 36;
             camMovement.bottomBorder -= 36;
-        }
-        else
-        {
-            //Do nothing 
+
+            
         }
     }
 
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.gameObject.name == "DoorLeft" && isSwitcht)
+        {
+            isSwitcht = false;
+            
+
+
+        }
+        if (other.gameObject.name == "DoorRight" && isSwitcht)
+        {
+            isSwitcht = false;
+            
+
+
+        }
+        if (other.gameObject.name == "DoorUp" && isSwitcht)
+        {
+            isSwitcht = false;
+            
+
+
+        }
+        if (other.gameObject.name == "DoorDown" && isSwitcht)
+        {
+            isSwitcht = false;
+           
+
+
+        }
+    }
     void Inventar()
     {
 

@@ -16,13 +16,16 @@ public class RoomSpawner : MonoBehaviour
     private int rand;
     public bool spawned = false;
 
+    public float waitTime = 4f;
+
      void Start()
     {
+        Destroy(gameObject, waitTime);
         templates = GameObject.Find("RoomTemplates").GetComponent<RoomTemplates>();
-        Invoke("Spawn", 0.1f);
+        Invoke("Spawn", 0.2f);
     }
 
-     void Spawn()
+    void Spawn()
     {
         if(!spawned)
         {
@@ -57,7 +60,14 @@ public class RoomSpawner : MonoBehaviour
     {
         if(other.CompareTag("Base"))
         {
-            Destroy(gameObject);
+            if(!other.GetComponent<RoomSpawner>().spawned  == !spawned)
+            {
+                //Spawn walls blocking of any openigs 
+                Instantiate(templates.closedRooms,transform.position, Quaternion.identity);
+                Destroy(gameObject);
+            }
+            
+            spawned = true;
         }
     }
 }

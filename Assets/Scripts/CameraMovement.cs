@@ -7,20 +7,16 @@ public class CameraMovement : MonoBehaviour
 
     Transform player;
 
-    public int leftBorder = -31;
-    public int rightBorder = 31;
-    public int topBorder = 18;
-    public int bottomBorder = -18;
+    public float leftBorder = -31;
+    public float rightBorder = 31;
+    public float topBorder = 18;
+    public float bottomBorder = -18;
 
     void Start()
     {
+        
         player = GameObject.Find("Player").GetComponent<Transform>();
         cam = GetComponent<Camera>();
-
-    leftBorder = -31;
-    rightBorder = 31;
-    topBorder = 18;
-    bottomBorder = -18;
 
 }
 
@@ -28,8 +24,14 @@ public class CameraMovement : MonoBehaviour
     void Update()
     {
         //Moved the Cam to the player
-        
-        this.gameObject.transform.position = new Vector3(player.position.x, player.position.y, -10f);
+        if (cam.orthographicSize <= 17)
+        {
+            this.gameObject.transform.position = new Vector2(player.position.x, player.position.y);
+        }
+        else
+        {
+            this.gameObject.transform.position = new Vector2(leftBorder - 15.5f, topBorder - 9);
+        }
         
 
         //Moved the cam out and in
@@ -43,7 +45,7 @@ public class CameraMovement : MonoBehaviour
         }
         else if (Input.GetAxis("Mouse ScrollWheel") < 0)
         {
-            if(cam.orthographicSize < 17.2 )
+            if(cam.orthographicSize < 17.5)
             {
                 cam.orthographicSize += 0.5f;
             }

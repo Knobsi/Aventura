@@ -39,6 +39,12 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Sky
+    uniqueID: 3117142429
+    locked: 0
+  - name: Background
+    uniqueID: 1547797457
+    locked: 0
   - name: Mobs
     uniqueID: 4160308665
     locked: 0
@@ -50,12 +56,6 @@ TagManager:
     locked: 0
   - name: Default
     uniqueID: 0
-    locked: 0
-  - name: Sky
-    uniqueID: 3117142429
-    locked: 0
-  - name: Background
-    uniqueID: 1547797457
     locked: 0
   - name: Player
     uniqueID: 1864739085
